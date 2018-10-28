@@ -49,6 +49,12 @@
         UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"DefaultCell"];
         [self customCellSelection:cell];
         
+        cell.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1.0);
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            cell.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0);
+        }];
+        
         if (tableView.editing) {
             
             [self.tableView setEditing:NO];
@@ -100,11 +106,15 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    cell.layer.transform = CATransform3DMakeScale(1.0, 0.1, 0.1);
+    if (self.noteArray.count - 1 == indexPath.row) {
+        cell.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1.0);
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            cell.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0);
+        }];
+    }
     
-    [UIView animateWithDuration:0.5 animations:^{
-        cell.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0);
-    }];
+    NSLog(@"Count %i Row %i", (int)self.noteArray.count, (int)indexPath.row);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
