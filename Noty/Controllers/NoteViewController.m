@@ -47,13 +47,16 @@
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
     [outputFormatter setDateFormat:@"dd-MM-yyyy"];
     NSString *currentDateString = [outputFormatter stringFromDate:currentDate];
+    
+    NSCharacterSet *charSet = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    NSString *trimmedString = [self.noteTextView.text stringByTrimmingCharactersInSet:charSet];
 
-    if (self.note != nil && ![self.noteTextView.text isEqualToString:@""]) {
+    if (self.note != nil && ![trimmedString isEqualToString:@""]) {
         self.note.date = currentDateString;
         self.note.content = self.noteTextView.text;
         [self.delegate sendNoteToMainVC:self.note];
 
-    } else if (![self.noteTextView.text isEqualToString:@""]){
+    } else if (![trimmedString isEqualToString:@""]){
         Note* note = [[Note alloc] init];
         note.date = currentDateString;
         note.content = self.noteTextView.text;
