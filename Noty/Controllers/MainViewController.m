@@ -13,6 +13,7 @@
 @interface MainViewController () <NoteInfoDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
 @property (strong, nonatomic) NSMutableArray* noteArray;
 
 @end
@@ -44,12 +45,19 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (self.noteArray.count == 0) {
+        
         UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"DefaultCell"];
-
         [self customCellSelection:cell];
+        
+        if (tableView.editing) {
+            
+            [self.tableView setEditing:NO];
+            [self.editButton setTitle:@"Edit"];
+        }
         
         return cell;
     } else {
+        
         NotyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NoteCell" forIndexPath:indexPath];
         
         Note* note = [self.noteArray objectAtIndex:indexPath.row];
