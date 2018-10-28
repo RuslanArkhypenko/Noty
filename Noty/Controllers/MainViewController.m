@@ -48,12 +48,7 @@
         
         UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"DefaultCell"];
         [self customCellSelection:cell];
-        
-        cell.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1.0);
-        
-        [UIView animateWithDuration:0.5 animations:^{
-            cell.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0);
-        }];
+        [self animateCell:cell];
         
         if (tableView.editing) {
             
@@ -107,14 +102,8 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (self.noteArray.count - 1 == indexPath.row) {
-        cell.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1.0);
-        
-        [UIView animateWithDuration:0.5 animations:^{
-            cell.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0);
-        }];
+        [self animateCell:cell];
     }
-    
-    NSLog(@"Count %i Row %i", (int)self.noteArray.count, (int)indexPath.row);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -179,6 +168,15 @@
         [self.tableView setEditing:NO animated:YES];
         sender.title = @"Edit";
     }
+}
+
+- (void)animateCell:(UITableViewCell*)cell {
+    
+    cell.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1.0);
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        cell.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0);
+    }];
 }
 
 @end
