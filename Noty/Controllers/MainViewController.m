@@ -10,7 +10,7 @@
 #import "NotyTableViewCell.h"
 #import "NoteViewController.h"
 
-@interface MainViewController () <NoteInfoDelegate>
+@interface MainViewController () <NoteInfoDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
@@ -96,6 +96,15 @@
             [tableView reloadData];
         }
     }
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    cell.layer.transform = CATransform3DMakeScale(1.0, 0.1, 0.1);
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        cell.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0);
+    }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
