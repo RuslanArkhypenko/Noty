@@ -23,6 +23,7 @@
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundWall"]];
     self.noteTextView.keyboardAppearance = UIKeyboardAppearanceDark;
+    self.noteTextView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
     self.noteTextView.alwaysBounceVertical = YES;
     
     self.noteTextView.text = self.note.content;
@@ -55,19 +56,13 @@
         self.note.date = currentDateString;
         self.note.content = self.noteTextView.text;
         [self.delegate sendNoteToMainVC:self.note];
-
-    } else if (![trimmedString isEqualToString:@""]){
+    } else if (![trimmedString isEqualToString:@""]) {
         Note* note = [[Note alloc] init];
         note.date = currentDateString;
         note.content = self.noteTextView.text;
         note.index = -99;
         [self.delegate sendNoteToMainVC:note];
     }
-    
-    [self.noteTextView resignFirstResponder];
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     [self.noteTextView resignFirstResponder];
 }
